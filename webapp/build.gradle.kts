@@ -1,10 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
 	id("org.springframework.boot") version "2.2.0.BUILD-SNAPSHOT"
 	id("io.spring.dependency-management") version "1.0.8.RELEASE"
 	kotlin("jvm") version "1.3.50"
 	kotlin("plugin.spring") version "1.3.50"
+
+	id("com.palantir.docker") version "0.22.1" // Gradle Docker plugin
 }
 
 group = "com.example"
@@ -45,4 +48,21 @@ tasks.withType<KotlinCompile> {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "1.8"
 	}
+}
+
+// Gradle Docker plugin configuration
+docker {
+	// All the build process should be passed before Docker related tasks
+	dependsOn(tasks.getByName("build"))
+
+	val bootJar: BootJar by tasks
+
+	val registry = "docker.io"
+	val userName = "lethe2211"
+	val version = "v1"
+
+	name = "$userName/${project.name}:$version"
+	tag("Lethe2211", "$registry/$name")
+	files(bootJar.archiveFile)
+	buildArgs(mapOf("JAR_FILE" to bootJar.archiveFileName.get()))
 }

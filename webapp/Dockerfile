@@ -1,4 +1,6 @@
 FROM adoptopenjdk/openjdk11:jre-11.0.4_11
 VOLUME /tmp
-COPY build/libs/*.jar app.jar
+ARG JAR_FILE
+RUN echo ${JAR_FILE}
+COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
