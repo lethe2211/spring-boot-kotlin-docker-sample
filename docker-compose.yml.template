@@ -1,0 +1,9 @@
+version: '3'
+services:
+  webapp:
+    build:
+      context: ./webapp
+      args:
+        - JAR_FILE=./build/libs/{{jarFile}}
+    ports:
+      - 8080:8080
