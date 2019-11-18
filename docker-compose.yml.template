@@ -7,3 +7,8 @@ services:
         - JAR_FILE=./build/libs/{{jarFile}}
     ports:
       - 8080:8080
+  dependent-api:
+    build:
+      context: ./mock-dependencies/dependent-api
+    ports:
+      - 9090:9090
