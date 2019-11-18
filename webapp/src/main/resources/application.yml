@@ -1,0 +1,2 @@
+dependent-api:
+  root-uri: "http://dependent-api:9090"

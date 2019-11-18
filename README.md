@@ -9,13 +9,27 @@
 * Valid credentials for Docker registry when you want to push the image
 
 # Usage
-## Build a Docker image
+## Run the app anyway
+
+### Run
 
 ```bash
-$ ./gradlew clean docker
+$ docker-compose up --build -d
+
+$ curl -v http://localhost:8080/dependent-api
 ```
 
-## Push a Docker image
+### Shut down
+
+```bash
+$ docker-compose down
+```
+
+## Use Gradle Docker plugin (might be removed in the future)
+
+https://github.com/palantir/gradle-docker
+
+### Push a Docker image
 
 1. Make sure you login to the registry you want to push to
 2. Edit build.gradle.kts so that we can specify the target registry (Please see the file in detail)
@@ -24,7 +38,7 @@ $ ./gradlew clean docker
     $ ./gradlew clean dockerPush
     ```
 
-## Run Docker Compose
+### Run Docker Compose
 
 1. Run the following command and make sure your docker-compose.yml has a proper content
     ```bash
